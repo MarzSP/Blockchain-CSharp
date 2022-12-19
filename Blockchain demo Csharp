@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+
+namespace BlockchainDemo
+{
+    class Block
+    {
+        public int Index { get; set; }
+        public DateTime Timestamp { get; set; }
+        public string PreviousHash { get; set; }
+        public string Hash { get; set; }
+        public string Data { get; set; }
+
+        public Block(int index, DateTime timestamp, string previousHash, string data)
+        {
+            Index = index;
+            Timestamp = timestamp;
+            PreviousHash = previousHash;
+            Data = data;
+            Hash = CalculateHash();
+        }
+
+        public string CalculateHash()
+        {
+            // implement a hashing algorithm to generate a hash for the block
+            return "";
+        }
+    }
+
+    class Blockchain
+    {
+        public List<Block> Chain { get; set; }
+
+        public Blockchain()
+        {
+            Chain = new List<Block>
+            {
+                new Block(0, DateTime.Now, null, "Genesis block")
+            };
+        }
+
+        public Block GetLatestBlock()
+        {
+            return Chain[Chain.Count - 1];
+        }
+
+        public void AddBlock(Block block)
+        {
+            block.PreviousHash = GetLatestBlock().Hash;
+            block.Hash = block.CalculateHash();
+            Chain.Add(block);
+        }
+    }
+}
+// Starting my new Blockchian
+Blockchain mariannesChain = new Blockchain();
+
+//Adding blocks to my blockchain with 'Add Block' method
+mariannesChain.AddBlock(new Block(1, DateTime.Now, "", "Block data goes here"));
